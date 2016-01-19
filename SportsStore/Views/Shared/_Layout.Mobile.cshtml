@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - 我的 ASP.NET 应用程序</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Styles.Render("~/Content/mobilecss")
+
+</head>
+<body>
+    <div data-role="page" id="page1">
+        <div data-theme="a" data-role="header" data-position="fixed">
+            <h3>SportsStore</h3>
+            @Html.Action("Menu", "Nav")
+        </div>
+        <div data-role="content">
+            <ul data-role="listview" data-divider-theme="b" data-inset="false">
+                @RenderBody()
+            </ul>
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jquery.mobile")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
