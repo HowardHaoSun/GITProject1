@@ -12,7 +12,10 @@ namespace SportsStore.Controllers
     
     public class ResourcesController : ApiController
     {
-        [Route("api/resources/{name}/{culture}",Name="Test")]
+        //在路由中增加特性限制，用于处理路由带入的值
+        //现在cluture为int，只会相应int。
+        //相关初始化工作在WebApiConfig.cs中
+        [Route("api/resources/{name}/{culture:int}",Name="Test")]
         public string GetCulture(string name, string culture="zh")
         {
             CultureInfo curUICulture = CultureInfo.CurrentUICulture;
