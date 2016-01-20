@@ -9,16 +9,22 @@ using System.Web.Http;
 
 namespace SportsStore.Controllers
 {
-    [Route("api/resources/{name}/{culture}")]
+    
     public class ResourcesController : ApiController
     {
-        public string GetCulture(string name, string culture)
+        [Route("api/resources/{name}/{culture}",Name="Test")]
+        public string GetCulture(string name, string culture="zh")
         {
             CultureInfo curUICulture = CultureInfo.CurrentUICulture;
             CultureInfo curCulture = CultureInfo.CurrentCulture;
             try
             {
                 Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture = new CultureInfo(culture);
+                return SportsStore.Properties.Resources.ResourceManager.GetString(name.ToLower());
+            }
+            catch
+            {
+                Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture = new CultureInfo("zh");
                 return SportsStore.Properties.Resources.ResourceManager.GetString(name.ToLower());
             }
             finally
