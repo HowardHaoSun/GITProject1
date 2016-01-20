@@ -23,12 +23,19 @@ namespace SportsStore.Areas.Administration.Controllers
         {
             return db.Products;
         }
+        [HttpGet]
+        [Route("api/AdminProducts/Category/{type}")]
+        public IQueryable<Product> GetProductsByType(string type)
+        {
+            return db.Products.Where(p => p.Category == type);
+        }
 
         // GET: api/AdminProducts/5
         [ResponseType(typeof(Product))]
         public async Task<IHttpActionResult> GetProduct(int id)
         {
             Product product = await db.Products.FindAsync(id);
+           // var products = await db.Products.FindAsync(x => x.);
             if (product == null)
             {
                 return NotFound();
