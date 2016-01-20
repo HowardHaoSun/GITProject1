@@ -8,7 +8,8 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using SportsStore.Domain.Entities;
 using SportsStore.Infrastructure.Binders;
-
+using System.Web.Http.ModelBinding;
+using SportsStore.MultiObjectModelBinding;
 namespace SportsStore
 {
     public class MvcApplication : System.Web.HttpApplication
@@ -17,6 +18,17 @@ namespace SportsStore
         {
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
+            //增加复杂Model绑定服务
+            GlobalConfiguration.Configuration.Services.ReplaceRange(
+                typeof(ModelBinderProvider), new ModelBinderProvider[]{
+                    new TypeConverterMobelBinderProvider(),
+                    new ComplexModelDtoModelBinderProvider(),
+                    new MutableObjectModelBinderProvider()
+                });
+            GlobalConfiguration.Configuration.Services.ReplaceRange(
+                typeof(System.Web.Http.ValueProviders.ValueProviderFactory), new System.Web.Http.ValueProviders.ValueProviderFactory[] { 
+                    new StaticValueProviderFactory()}
+                );
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
