@@ -19,16 +19,12 @@ namespace SportsStore
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             //增加复杂Model绑定服务
-            GlobalConfiguration.Configuration.Services.ReplaceRange(
-                typeof(ModelBinderProvider), new ModelBinderProvider[]{
-                    new TypeConverterMobelBinderProvider(),
-                    new ComplexModelDtoModelBinderProvider(),
-                    new MutableObjectModelBinderProvider()
-                });
-            GlobalConfiguration.Configuration.Services.ReplaceRange(
-                typeof(System.Web.Http.ValueProviders.ValueProviderFactory), new System.Web.Http.ValueProviders.ValueProviderFactory[] { 
-                    new StaticValueProviderFactory()}
-                );
+            GlobalConfiguration.Configuration.Services.ReplaceRange(typeof(ModelBinderProvider), new ModelBinderProvider[] { 
+                new TypeConverterMobelBinderProvider(),
+                new ComplexModelDtoModelBinderProvider(),
+                new CollectionModelBinderProvider(),
+                new MutableObjectModelBinderProvider()});
+            GlobalConfiguration.Configuration.Services.ReplaceRange(typeof(System.Web.Http.ValueProviders.ValueProviderFactory), new System.Web.Http.ValueProviders.ValueProviderFactory[] { new StaticValueProviderFactory() });
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);

@@ -16,39 +16,24 @@ namespace SportsStore.MultiObjectModelBinding
         public bool BindModel(HttpActionContext actionContext, ModelBindingContext bindingContext)
         {
             ComplexModelDto dto = bindingContext.Model as ComplexModelDto;
-            if(dto == null)
+            if (null == dto)
             {
                 return false;
             }
-            foreach(ModelMetadata property in dto.PropertyMetadata)
+            foreach (ModelMetadata property in dto.PropertyMetadata)
             {
                 ModelBindingContext subContext = new ModelBindingContext(bindingContext)
                 {
-                    ModelMetadata=property,
-                    ModelName = ModelNameBuilder.CreatePropertyModelName(bindingContext.ModelName,property.PropertyName)
+                    ModelMetadata = property,
+                    ModelName = ModelNameBuilder.CreatePropertyModelName(bindingContext.ModelName, property.PropertyName)
                 };
                 if (actionContext.Bind(subContext))
                 {
-                    dto.Results[property] = new ComplexModelDtoResult(subContext.Model,subContext.ValidationNode);
+                    dto.Results[property] = new ComplexModelDtoResult(subContext.Model, subContext.ValidationNode);
                 }
             }
             return true;
         }
     }
 
-    public static class ModelNameBuilder
-    {
-        public static string CreatePropertyModelName(string prifix, string propertyName)
-        {
-            if(string.IsNullOrEmpty(prifix))
-            {
-                return (propertyName ?? string.Empty);
-            }
-            if(!string.IsNullOrEmpty(propertyName))
-            {
-                return (prifix + "." + propertyName);
-            }
-            return (prifix ?? string.Empty);
-        }
-    }
 }

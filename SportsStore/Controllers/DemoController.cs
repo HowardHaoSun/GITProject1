@@ -14,12 +14,17 @@ namespace SportsStore.Controllers
         {
             base.Initialize(controllerContext);
             StaticValueProviderFactory.Clear();
-            StaticValueProviderFactory.Add("Name","张三");
-            StaticValueProviderFactory.Add("Address.City","北京");
+            StaticValueProviderFactory.Add("Name", "张三");
+            StaticValueProviderFactory.Add("PhoneNo", "123456789");
+            StaticValueProviderFactory.Add("EmailAddress", "zhangsan@gmail.com");
+            StaticValueProviderFactory.Add("Address.Province", "江苏省");
+            StaticValueProviderFactory.Add("Address.City", "苏州市");
+            StaticValueProviderFactory.Add("Address.District", "工业园区");
+            StaticValueProviderFactory.Add("Address.Street", "星湖街328号");
         }
-        public Contact Get([ModelBinder] Contact contact)
+        public IEnumerable<Contact> Get([ModelBinder]IEnumerable<Contact> contacts)
         {
-            return contact;
+            return contacts;
         }
     }
 }

@@ -195,8 +195,12 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\DemoController.cs" />
+    <Compile Include="MultiObjectModelBinding\CollectionModelBinderProvider.cs" />
+    <Compile Include="MultiObjectModelBinding\ElementalValueProvider.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="MultiObjectModelBinding\ModelBinderBuilder.cs" />
+    <Compile Include="MultiObjectModelBinding\ModelNameBuilder.cs" />
     <Compile Include="Controllers\NavController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
@@ -214,6 +218,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PagingInfo.cs" />
     <Compile Include="Models\ProductsListViewModel.cs" />
+    <Compile Include="MultiObjectModelBinding\CollectionModelBinder.cs" />
     <Compile Include="MultiObjectModelBinding\ComplexModelDtoModelBinder.cs" />
     <Compile Include="MultiObjectModelBinding\ComplexModelDtoModelBinderProvider.cs" />
     <Compile Include="MultiObjectModelBinding\Contact.cs" />

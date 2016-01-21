@@ -13,21 +13,9 @@ namespace SportsStore.MultiObjectModelBinding
 {
     public class MutableObjectModelBinder:IModelBinder
     {
-        internal static bool CanBindType(Type modelType)
-        {
-            if(TypeDescriptor.GetConverter(modelType).CanConvertFrom(typeof(string)))
-            {
-                return false;
-            }
-            if(modelType == typeof(ComplexModelDto))
-            {
-                return false;
-            }
-            return true;
-        }
         public bool BindModel(HttpActionContext actionContext, ModelBindingContext bindingContext)
         {
-            if(!CanBindType(bindingContext.ModelType))
+            if (!CanBindType(bindingContext.ModelType))
             {
                 return false;
             }
@@ -35,6 +23,7 @@ namespace SportsStore.MultiObjectModelBinding
             {
                 return false;
             }
+
             bindingContext.Model = Activator.CreateInstance(bindingContext.ModelType);
             ComplexModelDto dto = new ComplexModelDto(bindingContext.ModelMetadata, bindingContext.PropertyMetadata.Values);
             ModelBindingContext subContext = new ModelBindingContext(bindingContext)
@@ -42,21 +31,33 @@ namespace SportsStore.MultiObjectModelBinding
                 ModelMetadata = actionContext.GetMetadataProvider().GetMetadataForType(() => dto, typeof(ComplexModelDto)),
                 ModelName = bindingContext.ModelName
             };
-
             actionContext.Bind(subContext);
 
-            foreach(KeyValuePair<ModelMetadata,ComplexModelDtoResult>item in dto.Results)
+            foreach (KeyValuePair<ModelMetadata, ComplexModelDtoResult> item in dto.Results)
             {
-                ModelMetadata propertyMetaData = item.Key;
-                ComplexModelDtoResult dtoRestult = item.Value;
-                if(dtoRestult != null)
+                ModelMetadata propertyMetadata = item.Key;
+                ComplexModelDtoResult dtoResult = item.Value;
+                if (dtoResult != null)
                 {
-                    PropertyInfo propertyInfo = bindingContext.ModelType.GetProperty(propertyMetaData.PropertyName);
-                    if(propertyInfo.CanWrite)
+                    PropertyInfo propertyInfo = bindingContext.ModelType.GetProperty(propertyMetadata.PropertyName);
+                    if (propertyInfo.CanWrite)
                     {
-                        propertyInfo.SetValue(bindingContext.Model,dtoRestult.Model);
+                        propertyInfo.SetValue(bindingContext.Model, dtoResult.Model);
                     }
                 }
+            }
+            return true;
+        }
+
+        internal static bool CanBindType(Type modelType)
+        {
+            if (TypeDescriptor.GetConverter(modelType).CanConvertFrom(typeof(string)))
+            {
+                return false;
+            }
+            if (modelType == typeof(ComplexModelDto))
+            {
+                return false;
             }
             return true;
         }
