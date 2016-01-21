@@ -8,6 +8,7 @@ using SportsStore.Domain.Entities;
 using System.Threading.Tasks;
 namespace SportsStore.Areas.Administration.Controllers
 {
+    [System.Web.Mvc.RequireHttps]
     public class AdminController : Controller
     {
         // GET: Administration/Admin
