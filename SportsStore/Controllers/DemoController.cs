@@ -6,12 +6,14 @@ using System.Net.Http;
 using System.Web.Http;
 using SportsStore.MultiObjectModelBinding;
 using System.Web.Http.ModelBinding;
+using System.Web.Http.Cors;
 
 namespace SportsStore.Controllers
 {
    
     public class DemoController : ApiController
     {
+        [EnableCors("*",headers:"*",methods:"*")]
         protected override void Initialize(System.Web.Http.Controllers.HttpControllerContext controllerContext)
         {
             base.Initialize(controllerContext);
